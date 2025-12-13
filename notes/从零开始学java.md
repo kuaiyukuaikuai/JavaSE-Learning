@@ -1754,7 +1754,7 @@ public class TimeTest3 {
 
 ![image-20251211101727748](./从零开始学java.assets/image-20251211101727748.png)
 
-只有Thread类才可以执行线程操作start函数
+**只有Thread类才可以执行线程操作start函数**
 
 3.实现Callable接口
 
@@ -1764,7 +1764,18 @@ public class TimeTest3 {
 
 ![image-20251212112421625](./从零开始学java.assets/image-20251212112421625.png)
 
+**Thread 构造方法的限制**
+Thread 类的构造方法只接受 Runnable 类型参数
+而 Callable 接口与 Runnable 接口不兼容
+FutureTask 起到了桥梁作用，它同时实现了 Runnable 接口
+
+**FutureTask 的双重身份**
+作为 Runnable: 实现了 Runnable 接口，可以传递给 Thread 构造方法
+作为 Future: 实现了 Future 接口，可以获取异步执行结果
+
 总结
+
+**FutureTask是将Callable的实现类转化为Thread类可以执行的的类**
 
 ![image-20251212112439357](./从零开始学java.assets/image-20251212112439357.png)
 
@@ -1781,3 +1792,33 @@ public class TimeTest3 {
 - 同步方法![image-20251213115134755](./从零开始学java.assets/image-20251213115134755.png)
 - 同步对比![image-20251213115323775](./从零开始学java.assets/image-20251213115323775.png)
 - Lock锁![image-20251213120439385](./从零开始学java.assets/image-20251213120439385.png)![image-20251213120938752](./从零开始学java.assets/image-20251213120938752.png)
+
+### 线程池demo7executorService
+
+- 创建线程池
+
+![image-20251213131122721](./从零开始学java.assets/image-20251213131122721.png)![image-20251213141236489](./从零开始学java.assets/image-20251213141236489.png)
+
+submit函数返回类型是Future<T>
+
+当调用 submit(callable) 时，ExecutorService 内部会创建相应的 FutureTask
+
+FutureTask 包装了 Callable 对象并负责执行任务
+执行完成后，可以通过 Future.get() 获取 Callable.call() 的返回结果
+
+![image-20251213132055902](./从零开始学java.assets/image-20251213132055902.png)
+
+![image-20251213135609145](./从零开始学java.assets/image-20251213135609145.png)
+
+![image-20251213140431438](./从零开始学java.assets/image-20251213140431438.png)
+
+**Future 是一个接口，定义了异步计算的结果获取和操作方法**
+**FutureTask 是 Future 接口的一个实现类**
+
+![image-20251213154418408](./从零开始学java.assets/image-20251213154418408.png)
+
+![image-20251213160650759](./从零开始学java.assets/image-20251213160650759.png)
+
+### 并发/并进
+
+![image-20251213163031537](./从零开始学java.assets/image-20251213163031537.png)
