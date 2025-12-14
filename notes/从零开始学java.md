@@ -1738,9 +1738,9 @@ public class TimeTest3 {
 
 ![image-20251203212517120](./从零开始学java.assets/image-20251203212517120.png)
 
-## 多线程
+## Day04-多线程
 
-### 创建方式
+## 创建方式
 
 1,继承Thread类
 
@@ -1779,11 +1779,11 @@ FutureTask 起到了桥梁作用，它同时实现了 Runnable 接口
 
 ![image-20251212112439357](./从零开始学java.assets/image-20251212112439357.png)
 
-### 常用方法
+## 常用方法
 
 ![image-20251212142424528](./从零开始学java.assets/image-20251212142424528.png)
 
-### 线程安全的方案
+## 线程安全的方案
 
 **线程同步**
 
@@ -1793,7 +1793,7 @@ FutureTask 起到了桥梁作用，它同时实现了 Runnable 接口
 - 同步对比![image-20251213115323775](./从零开始学java.assets/image-20251213115323775.png)
 - Lock锁![image-20251213120439385](./从零开始学java.assets/image-20251213120439385.png)![image-20251213120938752](./从零开始学java.assets/image-20251213120938752.png)
 
-### 线程池demo7executorService
+## 线程池demo7executorService
 
 - 创建线程池
 
@@ -1819,6 +1819,26 @@ FutureTask 包装了 Callable 对象并负责执行任务
 
 ![image-20251213160650759](./从零开始学java.assets/image-20251213160650759.png)
 
-### 并发/并进
+## 并发/并进
 
 ![image-20251213163031537](./从零开始学java.assets/image-20251213163031537.png)
+
+## Day05-Java网络编程
+
+**BS架构**:浏览器与服务器端(主流)
+
+CS架构:客户端与服务器端
+
+## 网络编程三要素
+
+![image-20251214103012032](./从零开始学java.assets/image-20251214103012032.png)
+
+### ip
+
+![image-20251214103211377](./从零开始学java.assets/image-20251214103211377.png)
+
+![image-20251214103143564](./从零开始学java.assets/image-20251214103143564.png)![image-20251214103426537](./从零开始学java.assets/image-20251214103426537.png)
+
+### 端口
+
+### 协议

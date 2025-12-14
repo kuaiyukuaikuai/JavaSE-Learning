@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>day04-thread</module>
+        <module>day05-net</module>
     </modules>
 
     <properties>
