@@ -1829,7 +1829,7 @@ FutureTask 包装了 Callable 对象并负责执行任务
 
 CS架构:客户端与服务器端
 
-## 网络编程三要素
+## 网络编程三要素 
 
 ![image-20251214103012032](./从零开始学java.assets/image-20251214103012032.png)
 
@@ -1839,6 +1839,121 @@ CS架构:客户端与服务器端
 
 ![image-20251214103143564](./从零开始学java.assets/image-20251214103143564.png)![image-20251214103426537](./从零开始学java.assets/image-20251214103426537.png)
 
+```java
+//1.获取本机的IP地址
+//InetAddress 是 Java 中用于表示互联网协议(IP)地址的类
+InetAddress ip1 = InetAddress.getLocalHost();//getLocalHost()获取本机的IP地址(静态方法)
+System.out.println(ip1.getHostAddress());//getHostAddress()获取本机的IP地址(实例方法)
+System.out.println(ip1.getHostName());//getHostName()获取本机的主机名
+System.out.println(ip1);
+//2.获取指定IP地址
+InetAddress inet1 = InetAddress.getByName("www.baidu.com");
+System.out.println(inet1);
+System.out.println(inet1.getHostAddress());
+
+InetAddress inet2 = InetAddress.getByName("192.168.1.1");
+System.out.println(inet2);
+
+//判断本机与对方主机是否互通
+System.out.println(inet1.isReachable(5000)); //5000毫秒内可以ping通
+```
+
 ### 端口
 
+![image-20251214110830755](./从零开始学java.assets/image-20251214110830755.png)
+
 ### 协议
+
+![image-20251214112157676](./从零开始学java.assets/image-20251214112157676.png)
+
+![image-20251214112215145](./从零开始学java.assets/image-20251214112215145.png)
+
+## UDP通信
+
+![image-20251214112534720](./从零开始学java.assets/image-20251214112534720.png)
+
+UDP发送前不需要建立连接
+
+```java
+//发送端
+public class UDPClientDemo1 {
+    public static void main(String[] args) throws Exception {
+        //目标:完成UDP通信一发一收,客户端开发
+        System.out.println("客户端启动..");
+        //1.创建UDP通信的发送端对象
+        DatagramSocket socket =new DatagramSocket();/
+        //2.创建数据,并把数据打包,Datagram数据报
+        byte[] data="hello,UDP".getBytes();
+        DatagramPacket packet=new DatagramPacket(data,data.length, InetAddress.getLocalHost(),8080);
+        //3.发送数据
+        socket.send(packet);
+        socket.close();
+    }
+}
+
+//接受端
+public class UDPServerDemo2 {
+    public static void main(String[] args) throws Exception {
+        //目标:完成UDP通信一收一发,服务端开发
+        System.out.println("服务端启动...");
+        //1.创建UDP通信的接收端对象
+        DatagramSocket socket =new DatagramSocket(8080);
+        //2.创建数据包,封装接收到的数据
+        byte[] buf = new byte[1024*64];
+        DatagramPacket packet = new DatagramPacket(buf, buf.length);
+        //3.接收数据
+        socket.receive(packet);
+        //4.把数据包中的数据,解包
+        System.out.println("服务端收到数据:" + new String(packet.getData(),0,packet.getLength()));
+
+        //获取对方的ip和程序端口
+        // getAddress()方法用于获取数据包发送方的InetAddress对象
+        // getHostAddress()方法将InetAddress转换为标准的IP地址字符串格式
+        System.out.println("对方ip:" + packet.getAddress().getHostAddress());
+        System.out.println("对方端口:" + packet.getPort());
+    }
+}
+
+//多发多收代码包名demo3udp2
+```
+
+## TCP通信
+
+```java
+public class ClientDemo1 {
+    public static void main(String[] args) throws Exception {
+        //目标:完成TCP通信,客户端开发
+        //1.创建一个Socket对象,构造方法中绑定服务器的IP地址和端口号,Socket可以理解为端点
+        System.out.println("客户端启动..");
+        Socket socket = new Socket("127.0.0.1", 8888);//8888为目标端口
+        //2.获取一个输出流,写数据
+        DataOutputStream dos=new DataOutputStream(socket.getOutputStream());
+        dos.writeUTF("hello,服务器");
+        dos.writeInt(100);
+        //3.释放资源
+        socket.close();
+    }
+}
+
+
+
+public class ServerDemo2 {
+    public static void main(String[] args) throws IOException {
+        //目标:完成TCP通信,服务端开发
+        //1.创建一个ServerSocket对象,构造方法中绑定服务端的端口号
+        ServerSocket ss = new ServerSocket(8888);//8888为监听端口
+        //2.调用accept方法,阻塞等待客户端连接,获取一个Socket对象
+        Socket socket = ss.accept();
+        //3.获取输入流,读取数据
+        InputStream is = socket.getInputStream();
+        //4.将输入流包装成特殊数据输入流
+        DataInputStream dis = new DataInputStream(is);
+        //5.读取数据
+        System.out.println(dis.readUTF());
+        System.out.println(dis.readInt());
+        //6.客户端的ip和端口
+        System.out.println(socket.getInetAddress().getHostAddress() + ":" + socket.getPort());
+    }
+}
+```
+
