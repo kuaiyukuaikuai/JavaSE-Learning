@@ -10,7 +10,7 @@ public class ServerDemo2 {
     public static void main(String[] args) throws IOException {
         //目标:完成TCP通信,服务端开发,多发多收,支持多个客户端开发
         //1.创建一个ServerSocket对象,构造方法中绑定服务端的端口号
-        ServerSocket ss = new ServerSocket(8888);//8888为监听端口
+        ServerSocket ss = new ServerSocket(9999);//8888为监听端口
         while (true) {
             System.out.println("等待客户端连接...");
             //2.调用accept方法,阻塞等待客户端连接,获取一个Socket对象

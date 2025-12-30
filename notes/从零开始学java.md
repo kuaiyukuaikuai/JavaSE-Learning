@@ -1799,6 +1799,10 @@ FutureTask 起到了桥梁作用，它同时实现了 Runnable 接口
 
 ![image-20251213131122721](./从零开始学java.assets/image-20251213131122721.png)![image-20251213141236489](./从零开始学java.assets/image-20251213141236489.png)
 
+![image-20251230125259274](./从零开始学java.assets/image-20251230125259274.png)
+
+**Thread实现了Runnable接口**，所以线程池的execute方法也可以用在Thread
+
 submit函数返回类型是Future<T>
 
 当调用 submit(callable) 时，ExecutorService 内部会创建相应的 FutureTask
@@ -1957,3 +1961,79 @@ public class ServerDemo2 {
 }
 ```
 
+### tcp多发多收
+
+```java
+public class ClientDemo1 {
+    public static void main(String[] args) throws Exception {
+        //目标:完成TCP通信,客户端开发,多发多收
+        //1.创建一个Socket对象,构造方法中绑定服务器的IP地址和端口号,Socket可以理解为端点
+        System.out.println("客户端启动..");
+        Socket socket = new Socket("127.0.0.1", 9999);//8888为目标端口
+        //2.获取一个输出流,写数据
+        DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("请输入要发送的数据:");
+            String data = sc.next();
+            if (data.equals("exit")) {
+                //3.释放资源
+                socket.close();
+                dos.close();
+                System.out.println("客户端退出!");
+                break;
+            }
+            dos.writeUTF(data);
+            // 刷新输出流缓冲区，将缓冲区中的数据立即写入目标设备或下一级输出流。
+            // 此操作确保所有缓冲的数据都被强制输出，避免数据在缓冲区中滞留。
+            dos.flush();
+        }
+    }
+}
+```
+
+```java
+public class ServerDemo2 {
+    public static void main(String[] args) throws IOException {
+        //目标:完成TCP通信,服务端开发,多发多收,支持多个客户端开发
+        //1.创建一个ServerSocket对象,构造方法中绑定服务端的端口号
+        ServerSocket ss = new ServerSocket(9999);//8888为监听端口
+        while (true) {
+            System.out.println("等待客户端连接...");
+            //2.调用accept方法,阻塞等待客户端连接,获取一个Socket对象
+            Socket socket = ss.accept();
+            //3.把这个客户端管道交给一个独立的子线程专门负责接收这个管道的信息
+            new ServerReader(socket).start();
+        }
+    }
+}
+```
+
+```java
+public class ServerReader extends Thread {
+    private Socket socket;
+
+    public ServerReader(Socket socket) {
+        this.socket = socket;
+    }
+    @Override
+    public void run() {
+        try {
+            //1.获取输入流,读取数据
+            InputStream is = socket.getInputStream();
+            //2.将输入流包装成特殊数据输入流
+            DataInputStream dis = new DataInputStream(is);
+            while (true) {
+                //3.读取数据
+                String msg = dis.readUTF();
+                System.out.println("服务端收到数据:" + msg);
+                //客户端的ip和端口
+                System.out.println("客户端ip:" + socket.getInetAddress().getHostAddress());
+                System.out.println("客户端端口:" + socket.getPort());
+            }
+        } catch (Exception e) {
+            System.out.println("客户端退出!"+socket.getInetAddress().getHostAddress());
+        }
+    }
+}
+```

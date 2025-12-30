@@ -7,7 +7,6 @@ import java.net.Socket;
 
 public class ServerReader extends Thread {
     private Socket socket;
-
     public ServerReader(Socket socket) {
         this.socket = socket;
     }
@@ -26,9 +25,8 @@ public class ServerReader extends Thread {
                 System.out.println("客户端ip:" + socket.getInetAddress().getHostAddress());
                 System.out.println("客户端端口:" + socket.getPort());
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("客户端退出!"+socket.getInetAddress().getHostAddress());
         }
     }
 }

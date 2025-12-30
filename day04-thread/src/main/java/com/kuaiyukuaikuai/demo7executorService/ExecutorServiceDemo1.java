@@ -12,6 +12,7 @@ public class ExecutorServiceDemo1 {
 
         //2.使用线程池对象执行任务
         Runnable target=new MyRunnable();
+        //execute 是 ExecutorService 接口中的核心方法，用于提交任务到线程池执行。
         executor.execute(target);
         executor.execute(target);
         executor.execute(target);
