@@ -12,6 +12,7 @@
     <modules>
         <module>day04-thread</module>
         <module>day05-net</module>
+        <module>Day06-junit-reflect-annotation-proxy</module>
     </modules>
 
     <properties>

@@ -1738,7 +1738,7 @@ public class TimeTest3 {
 
 ![image-20251203212517120](./从零开始学java.assets/image-20251203212517120.png)
 
-## Day04-多线程
+# Day04-多线程
 
 ## 创建方式
 
@@ -2037,3 +2037,41 @@ public class ServerReader extends Thread {
     }
 }
 ```
+
+![image-20251230132320062](./从零开始学java.assets/image-20251230132320062.png)![image-20251230132435309](./从零开始学java.assets/image-20251230132435309.png)![image-20251230133440861](./从零开始学java.assets/image-20251230133440861.png)![image-20251230133510222](./从零开始学java.assets/image-20251230133510222.png)
+
+# Day06-java高级技术
+
+## 单元测试
+
+针对最小的功能单元:方法,编写测试代码对其进行正确性测试
+
+### Junit单元测试框架
+
+## 反射
+
+![image-20251231135615961](./从零开始学java.assets/image-20251231135615961.png)
+
+![image-20251231135645497](./从零开始学java.assets/image-20251231135645497.png)
+
+![image-20251231141130895](./从零开始学java.assets/image-20251231141130895.png)
+
+![image-20251231141230349](./从零开始学java.assets/image-20251231141230349.png)
+
+![image-20251231143523964](./从零开始学java.assets/image-20251231143523964.png)
+
+![image-20260102095614818](./从零开始学java.assets/image-20260102095614818.png)
+
+## 注解
+
+![image-20260102095932162](./从零开始学java.assets/image-20260102095932162.png)
+
+
+
+![image-20260102095958328](./从零开始学java.assets/image-20260102095958328.png)
+
+![image-20260102104841566](./从零开始学java.assets/image-20260102104841566.png)
+
+AnnotationDemo3
+
+![image-20260102113802399](./从零开始学java.assets/image-20260102113802399.png)
